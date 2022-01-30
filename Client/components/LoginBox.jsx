@@ -6,10 +6,13 @@ class LoginBox extends Component{
     render(){
         return(
             <div className = "loginBox">
-                <div className="logo">Logo Here</div>
-                <button onClick = {()=>this.props.loginDetails()}>Log In</button>
-                <button onClick = {()=>this.props.signupDetails()}>Sign-Up</button>
-                
+                <div className="logo"><img className='logoImg' src="https://kottke.org/plus/misc/images/orange-painting.jpg"/></div>
+                <div className='loginButtonBox'>
+                    <div className='loginText'>Welcome back!</div>
+                    <button onClick = {()=>this.props.loginDetails()} className='buttonLoginPage'>Log In</button>
+                    <div className='loginText'>Need an account?</div>
+                    <button onClick = {()=>this.props.signupDetails()} className='buttonLoginPage'>Sign Up</button>
+                </div>
             </div>
         )
     }
