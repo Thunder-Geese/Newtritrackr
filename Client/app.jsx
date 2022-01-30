@@ -75,7 +75,17 @@ class App extends Component{
 
     submitSignup(usernameText, passwordText, ageText, heightText, sexText, weightText, event){
         event.preventDefault();
-        //include goal-macros?
+        //MACRO CALCULATIONS DEPENDING ON USER'S FORM INFO
+
+          // BMR Male = 66 + (6.3 x body weight in lbs.) + (12.9 x height in inches) - (6.8 x age in years)
+          // BMR Female = 655 + (4.3 x weight in lbs.) + (4.7 x height in inches) - (4.7 x age in years)
+
+          //***Calorie-Calculation = BMR x 1.55 ***/ (AVG ACTIVITY)
+
+          //***Carbohydrates       =  Calorie / 4   ***/
+          //***Protein             =  Calorie / 4   ***/
+          //***Fats                =  Calorie / 9   ***/
+
         const submittedInfo = {username: usernameText.current.value, 
                                password: passwordText.current.value,
                                age: ageText.current.value,
