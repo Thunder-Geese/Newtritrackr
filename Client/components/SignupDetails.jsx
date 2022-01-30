@@ -30,6 +30,7 @@ class SignupDetails extends Component{
                         <div className='loginText'>Please input your birth assigned sex.</div>
                         <input ref={sexText} type='sex' placeholder='M or F' className='loginInput'></input>
                         <button type='submit' value='Log In' className='buttonLoginPage'>Create Account</button>
+                        <div className='whiteSpace'></div>
                     </form>
                   </div>
                 </div>

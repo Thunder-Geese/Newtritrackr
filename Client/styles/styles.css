@@ -115,7 +115,7 @@ body {
 .loginInput {
     min-width: 51%;
     min-height: 40px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-size: 18px;
     font-family: 'Readex Pro', sans-serif;
     border-radius: 10px;
@@ -161,4 +161,8 @@ body {
 .logoImg{
     height: 240px;
     width: 240px;
+}
+
+.whiteSpace{
+    height: 20px;
 }
