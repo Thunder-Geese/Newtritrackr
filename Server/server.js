@@ -34,17 +34,16 @@ app.post('/meal', mealController.addMeals, (req, res) => {
 });
 
 
-/**
- * 404 handler
- */
+
+ //404 handler catch all handler for unknown routes
 
  app.use('*', (req,res) => {
   res.status(404).send('Not Found');
 });
 
-/**
- * Global error handler
- */
+
+//Global error handler
+
 
  app.use((err, req, res, next) => {
   console.log(err);
@@ -53,7 +52,7 @@ app.post('/meal', mealController.addMeals, (req, res) => {
 
 
 
-
+//start server 
 app.listen(PORT, () => {
     console.log(`Server listening on port: ${PORT}`);
   });
