@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300&display=swap');
+
+/*
+colors: light-grey: 220/220/220
+bg blue: 57, 94, 129
+
+*/
+
+body {
+    background-color: rgb(255, 248, 171);
+    margin: 0px;
+    padding: 0px;
+}
+
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.centerDashboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1px solid black;
+    min-height: 100vh;
+    width: 100vw;
+}
+.dashboardContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 50px 50px;
+    grid-template-areas:
+    "addMeal dailyGoals dailyGoals"
+    "todaysMeals dailyGoals dailyGoals"
+    "todaysMeals weeklyGoals weeklyGoals";
+    height: 75vh;
+    width: 75vw;
+    font-family: 'Readex Pro', sans-serif;
+}
+
+.loginBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 60px;
+    border: 1px solid rgb(103, 215, 246);
+    min-width: 300px;
+    min-height: 500px;
+    border-radius: 10px;
+    background-color: rgb(190, 226, 236);
+    box-shadow: 5px 5px 3px rgba(255, 187, 187, 0.798);
+}
+
+.addMeal, .todaysMeals, .dailyGoals, .weeklyGoals {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 60px;
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 10px;
+    background-color: rgb(220, 220, 220);
+    box-shadow: 5px 5px 3px rgba(48, 48, 48, 0.418);
+}
+
+.addMeal{
+    grid-area: addMeal;
+    font-size: 24px;
+}
+.todaysMeals{
+    grid-area: todaysMeals;
+}
+.dailyGoals{
+    grid-area: dailyGoals;
+}
+.weeklyGoals{
+    grid-area: weeklyGoals;
+}
+
+.loginDetails, .signupDetails {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    position: absolute;
+    min-width: 400px;
+    min-height: 400px;
+    border: 1px solid rgb(100, 100, 100);
+    box-shadow: 5px 5px 3px rgba(48, 48, 48, 0.788);
+    border-radius: 10px;
+    background-color: rgb(220, 220, 220);
+    z-index: 3;
+    padding: 15px;
+}
+
+.loginWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    min-width: 100vw;
+}
+
+.transparentBg{
+    position: absolute;
+    min-width: 100vw;
+    min-height: 100vh;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.425);
+    float: left;
+}
+
+
+/*CSS for button styling on homepage*/
+.buttonLoginPage {
+    min-width: 75%;
+    border: 1px solid rgb(254, 174, 174);
+    background-color: rgb(138, 217, 185);
+    box-shadow: 3px 3px 2px rgba(255, 212, 212, 0.418);
+    padding: 13px;
+    font-size: 20px;
+    border-radius: 10px;
+    font-family: 'Readex Pro', sans-serif;
+    font-weight: bold;
+    color: rgb(220, 220, 220)
+}
+
+.buttonLoginPage:active{
+    /* rgb(130, 180, 241) */
+    background-color: rgb(116, 177, 251);
+}
+
+.closeDetails{
+    background-color: transparent;
+    align-self: flex-end;
+    background-color: rgb(176, 162, 254);
+    padding: 4px;
+    color: white;
+    font-family: 'Readex Pro', sans-serif;
+    font-weight: bold;
+    border: 1px solid rgb(255, 232, 232);
+    border-radius: 10px;
+}
+
+.closeDetails:active{
+    background-color: rgb(169, 154, 252);
+}
+
+.inputWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 300px;
+    max-width: 400px;
+    text-align: center;
+
+}
+
+.loginInput {
+    min-width: 51%;
+    min-height: 40px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-family: 'Readex Pro', sans-serif;
+    border-radius: 10px;
+    border: 1px solid rgb(100, 100, 100);
+    box-shadow: 3px 3px 2px rgba(48, 48, 48, 0.418);
+    margin-left: 5px;
+}
+
+.loginInput:focus{
+    border: 1px solid rgb(100, 100, 100);
+    outline: none;
+}
+
+.loginText{
+    font-size: 14px;
+    font-family: 'Readex Pro', sans-serif;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+.loginTextLarge{
+    font-size: 30px;
+    font-family: 'Readex Pro', sans-serif;
+    font-weight: bold;
+    margin-bottom: 40px;
+    height: 60px;
+}
+
+.loginButtonBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 200px;
+    min-width: 96%;
+    border-top: 1px solid rgb(249, 203, 234);
+}
+
+.logo {
+    height: 200px;
+}
+
+.logoImg{
+    height: 240px;
+    width: 240px;
+}
+
+.whiteSpace{
+    height: 20px;
+}
+
+.loginFailed{
+    color: rgb(255, 88, 88);
+    font-family: 'Readex Pro', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    height: 20px;
+    max-height: 20px;
+}
