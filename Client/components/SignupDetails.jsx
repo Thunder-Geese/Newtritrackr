@@ -27,7 +27,7 @@ class SignupDetails extends Component{
                         <input ref={heightText} type='height' placeholder='height in inches' className='loginInput'></input>
                         <div className='loginText'>Please input your weight in pounds.</div>
                         <input ref={weightText} type='weight' placeholder='weight in lb' className='loginInput'></input>
-                        <div className='loginText'>Please input your birth assigned sex.</div>
+                        <div className='loginText'>Please input your sex.</div>
                         <input ref={sexText} type='sex' placeholder='M or F' className='loginInput'></input>
                         <button type='submit' value='Log In' className='buttonLoginPage'>Create Account</button>
                         <div className='whiteSpace'></div>

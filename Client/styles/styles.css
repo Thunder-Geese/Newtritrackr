@@ -82,7 +82,7 @@ body {
     grid-area: weeklyGoals;
 }
 
-.loginDetails, .signupDetails {
+.loginDetails, .signupDetails, .addMealDetails {
     display: flex;
     align-self: center;
     flex-direction: column;
@@ -97,7 +97,23 @@ body {
     padding: 15px;
 }
 
+.addMealDetails {
+    min-width: 45vw;
+    min-height: 65vh;
+}
+
 .loginWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    min-width: 100vw;
+}
+
+.addMealWrapper{
+    position: absolute;
+    top: 50vh;
+    left: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -116,7 +132,7 @@ body {
 
 
 /*CSS for button styling on homepage*/
-.buttonLoginPage {
+.buttonLoginPage, .submitMealButton {
     min-width: 75%;
     border: 1px solid rgb(254, 174, 174);
     background-color: rgb(138, 217, 185);
@@ -129,7 +145,12 @@ body {
     color: rgb(220, 220, 220)
 }
 
-.buttonLoginPage:active{
+.submitMealButton{
+    align-self: flex-end;
+    min-width: 25%;
+}
+
+.buttonLoginPage:active, .submitMealButton:active{
     /* rgb(130, 180, 241) */
     background-color: rgb(116, 177, 251);
 }
@@ -150,7 +171,7 @@ body {
     background-color: rgb(169, 154, 252);
 }
 
-.inputWrapper{
+.inputWrapper, .addMealDetailsWrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -161,7 +182,13 @@ body {
 
 }
 
-.loginInput {
+.addMealDetailsWrapper {
+    min-width: 100%;
+    min-height: 60vh;
+    border: 1px solid black;
+}
+
+.loginInput, .addMealInput {
     min-width: 51%;
     min-height: 40px;
     margin-bottom: 20px;
@@ -173,24 +200,47 @@ body {
     margin-left: 5px;
 }
 
-.loginInput:focus{
+.ingredientList {
+    max-height: 30vh;
+    overflow: scroll;
+}
+
+.addMealInput {
+    width: 20vw;
+    margin-right: 20px;
+}
+
+.loginInput:focus, .addMealInput:focus {
     border: 1px solid rgb(100, 100, 100);
     outline: none;
 }
 
-.loginText{
+.loginText, .addMealText, .addMealTextList {
     font-size: 14px;
     font-family: 'Readex Pro', sans-serif;
     font-weight: bold;
     margin-top: 3px;
 }
 
-.loginTextLarge{
+.loginTextLarge, .addMealTextLarge {
     font-size: 30px;
     font-family: 'Readex Pro', sans-serif;
     font-weight: bold;
     margin-bottom: 40px;
     height: 60px;
+}
+
+.addMealTextLarge {
+    align-self: flex-start;
+}
+
+.addMealText {
+    align-self: flex-end;
+}
+
+.addMealForm {
+    justify-self: flex-end;
+    border-bottom: 1px solid rgb(100,100,100);
 }
 
 .loginButtonBox{

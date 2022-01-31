@@ -4,7 +4,6 @@ const userController = {}
 
 //verify user exists in database 
 userController.verifyLogin = (req, res, next) =>{
-    console.log(req.body)
     const { username, password } = req.body;
 
     //should use query parameters, not template literal

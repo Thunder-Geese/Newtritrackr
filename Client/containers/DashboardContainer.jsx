@@ -7,10 +7,15 @@ import WeeklyGoals from '../components/WeeklyGoals.jsx'
 class DashboardContainer extends Component{
 
     render(){
+        console.log(this.props.username)
         return(
             <div className='centerDashboard'>
                 <div className='dashboardContainer'>
-                    <AddMeal />
+                    <AddMeal 
+                        username={this.props.username}
+                        addMealDetails={this.props.addMealDetails}
+                        displayAddMealDetails={this.props.displayAddMealDetails}
+                    />
                     <DailyGoals />
                     <TodaysMeals />
                     <WeeklyGoals />

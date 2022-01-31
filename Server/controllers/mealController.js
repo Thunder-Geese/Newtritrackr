@@ -4,52 +4,58 @@ const mealController = {}
 
 //get
 mealController.getMealsInfo = (req, res, next) =>{
-    // select everything from  meal table all meals where user__id === req.body.__userID
-    // query that data
-        // iterating through the data 
-        // split into 2 objs 
-            // one for meals within 24 hours // 
-            // one for 7 days 
 
-    // const id = req.body.id or req.query.id 
-//     const meals  = `SELECT * FROM meal` //WHERE user_id ==== ${id}, how do we access the user_id that is being selected?
-//     meal.query(meals)
-//     console.log(meals)
-//         .then(data =>  {
-//             for (let i = 0; i < data.rows.length; i++) {
-//             if(data.rows[i].user_id === req.body.user_id && data.rows[i].)
-//                 let 
-//          })
 
+    const {user_id} = req.body
+        const mealsInfo =  `SELECT * FROM meal WHERE user_id = '${user_id}'`
+        meal.query(mealsInfo)
+        .then(data =>{
+            if(data.rows) {
+                res.locals.info = {
+                    food: data.rows
+                }   
+            }
+        })
+    return next()
 }
 
 //adds meals 
 mealController.addMeals = (req, res, next) =>{
 
-    const apiSearch = `https://api.edamam.com/api/food-database/v2/parser?app_id=f7bc40de&app_key=72cc5c040a857910e84239e6daad750c&ingr=${req.body.food}`
-    // let addFood = ''
-    // axios.get(apiSearch)
-    //     .then (data => {
-    //          for (let i = 0; i < data.data.hints[i]; i++) {
-    //             if (req.body.food == data.data.hints[i].food.label){ 
-    //                addFood = `INSERT INTO meal (user_id, date, protein, fat, carbs, calories, meal_name)
-    //                VALUES ('${req.body.user_id}, ${req.body.date}, ${data.data.hints[i].food.nutrients.PROCNT}, ${data.data.hints[i].food.nutrients.FAT}, ${data.data.hints[i].food.nutrients.CHOCDF}, ${data.data.hints[i].food.nutrients.ENERC_KCAL}, '${req.body.meal_name}')`
-    //             }
-    //         }
-    //     })
-    // if (addFoods !== '') {
-    //     meal.query(addFood)
-    //     return next()
-    // }
-    // else {
-    //     //send something if we cant find food name?
-    //     return next()
-    // }
-
+    //ITERIATE THROUGH REQ.BODY.INGREDIENTS
+        //SUM them into the 4 categories
+        //SEND into SQL Database with (req.body.NAME, the 4 categories, the date, userID)
+        
+    let apiSearch = `https://api.edamam.com/api/food-database/v2/parser?app_id=f7bc40de&app_key=72cc5c040a857910e84239e6daad750c&ingr=${req.body.food}`
+    let addFood = ''
     axios.get(apiSearch)
-        //it pulls food labels that contains what we are passing in through "req.body.food"
-        .then(data => console.log('HERE', data.data.hints[0]))
+        .then (data => {
+                if (data.data.hints[0]){ 
+                   addFood = `INSERT INTO meal (user_id, date, protein, fat, carbs, calories, meal_name)
+                   VALUES ('${req.body.user_id}, ${req.body.date}, ${data.data.hints[0].food.nutrients.PROCNT}, ${data.data.hints[i].food.nutrients.FAT}, ${data.data.hints[i].food.nutrients.CHOCDF}, ${data.data.hints[i].food.nutrients.ENERC_KCAL}, '${req.body.meal_name}')`
+                }
+            })
+
+
+    if (addFoods !== '') {
+        res.locals.info = {
+            addedFood: true,
+        }
+        meal.query(addFood)
+        return next()
+    }
+    else {
+        res.locals.info = {
+            addedFood: false,
+        }
+        return next()
+    }
 
 }
+
+//front end will send us an array of food items
+    //loop through the array of food items and do an api call for each of them and get the data for each, 
+        //sum them
+    //return the sum of the array of food items
 
 module.exports = mealController;

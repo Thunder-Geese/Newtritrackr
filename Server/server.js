@@ -10,12 +10,11 @@ const PORT = 3000;
 
 app.use(express.json());
 
-//do we need this to get to display /user login/signup page
-// app.get('/', (req, res) => {});
 
 //user login
 app.post('/user', userController.verifyLogin, (req, res) => {
-  res.status(200).json(res.locals.info);
+  console.log(res.locals)
+  res.status(200).json(res.locals);
 });
 
 
@@ -29,10 +28,15 @@ app.get('/meal', mealController.getMealsInfo, (req, res) => {
   res.status(200)
 });
 
-app.post('/meal', mealController.addMeals, (req, res) => {
+app.post('/meal', mealController.addMeals, mealController.getMealsInfo, (req, res) => {
   res.status(200)
 });
 
+app.get('/', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '..', 'index.html'))
+})
+
+app.use('/build', express.static(path.join(__dirname, '..', 'build')));
 
 
  //404 handler catch all handler for unknown routes
@@ -43,7 +47,6 @@ app.post('/meal', mealController.addMeals, (req, res) => {
 
 
 //Global error handler
-
 
  app.use((err, req, res, next) => {
   console.log(err);

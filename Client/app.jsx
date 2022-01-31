@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 import LoginContainer from './containers/LoginContainer.jsx';
 import DashboardContainer from './containers/DashboardContainer.jsx';
 
@@ -19,13 +18,16 @@ class App extends Component{
             username: null,
             displayLoginDetails: false,
             displaySignupDetails: false,
+            displayAddMealDetails: false,
             loginFailed: false,
         }
 
         this.state = this.defaultState;
         this.loginDetails = this.loginDetails.bind(this);
         this.submitLogin = this.submitLogin.bind(this);
+        this.submitSignup = this.submitSignup.bind(this);
         this.signupDetails = this.signupDetails.bind(this);
+        this.addMealDetails = this.addMealDetails.bind(this);
     }
 
     loginDetails(){
@@ -46,41 +48,34 @@ class App extends Component{
         }
     }
 
+    addMealDetails(){
+        if (!this.state.displayAddMealDetails){
+            this.setState({displayAddMealDetails: true});
+        } else {
+            this.setState({displayAddMealDetails: false});
+        }
+    }
+
     submitLogin(usernameText, passwordText, event){
         event.preventDefault();
         const submittedInfo = {username: usernameText.current.value, 
                                password: passwordText.current.value}
-            console.log(submittedInfo.username + ' ' + submittedInfo.password)
-
-        //test case for user log in
-        if (submittedInfo.username === 'hello' && submittedInfo.password === 'world'){
-            console.log('updating state')
-            return this.setState({isLoggedIn: true, loginFailed: false, username: submittedInfo.username})
-        } else {
-            return this.setState({loginFailed: true})
-        }
-
-            // //Checking to see if username is in the database
-            // fetch('http://localhost:3000/user',{
-            //     method:'POST',
-            //     headers: {
-            //         'Content-type': 'application/json'
-            //     },
-            //     body: JSON.stringify(submittedInfo)
+            fetch('/user', {
+                method:'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(submittedInfo)
+            })
+            .then(data => data.json())
+            .then(data =>{
+                if (data.info.validLogin){
+                    return this.setState({isLoggedIn: true, loginFailed: false, username: submittedInfo.username})
+                } else {
+                    return this.setState({loginFailed: true})
+                }
                 
-            // }
-            // .then()//if response from server is true...
-            // .catch((error) => {
-            //     console.log('log-in-error:', error);
-            // }))
-            
-            //NOW,
-            //when we receive a response back from our post request
-            //we can update state here and render the page differently
-            //check res.locals.validLogin, if true, update state, then based on state
-            //render:
-            //  a <DashboardContainer /> instead of a <LoginContainer />
-            //if the username/password was correct
+            })
     }
 
     submitSignup(usernameText, passwordText, ageText, heightText, sexText, weightText, event){
@@ -107,28 +102,32 @@ class App extends Component{
                 submittedInfo.weight + ' ' + submittedInfo.height+ ' ' + submittedInfo.sex)
 
         //include goal-macros?    
-        fetch('http://localhost:3000/user/signup', {
+        fetch('/user/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(submittedInfo),
         })
-        .then((data)=>{
-
+        .then(data=>data.json())
+        .then(data=>{
+            if (data.info.validSignup){
+                return this.setState({isLoggedIn: true, loginFailed: false, username: submittedInfo.username})
+            } else {
+                return this.setState({isLoggedIn: false})
+            }
         })
     }
 
     render(){
-        // this.state.isLoggedIn is false, render the LoginContainer
-            //dashcontainer will have props of users-data
 
-       
         return(
             <div>
                 {this.state.isLoggedIn ? 
                 <DashboardContainer 
-                    username = {this.state.username}
+                    username={this.state.username}
+                    addMealDetails={this.addMealDetails}
+                    displayAddMealDetails={this.state.displayAddMealDetails}
                 />//if true, dashboard
                 :
                 <LoginContainer                   
