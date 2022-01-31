@@ -15,13 +15,13 @@ app.use(express.json());
 
 //user login
 app.post('/user', userController.verifyLogin, (req, res) => {
-  res.status(200)
+  res.status(200).json(res.locals.info);
 });
 
 
 //user signup 
 app.post('/user/signup', userController.createUser, (req, res) => {
-  res.status(200)
+  res.status(200).json(res.locals)
 });
 
 //meals
