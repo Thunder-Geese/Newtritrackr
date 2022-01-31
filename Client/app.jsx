@@ -8,11 +8,20 @@ class App extends Component{
     constructor(){
         super();
         //set default state for app load
+
+        //isLoggedIn: displays the dashboard instead of login, if true
+        //displayLoginDetails: toggles rendering of the login popup box
+        //displaySignupDetails: toggles rendering of the signup form box
+        //loginFailed: displays 'error: failed to log in' if true
+
         this.defaultState = {
-            isLoggedIn: false,
+            isLoggedIn: true,
+            username: null,
             displayLoginDetails: false,
             displaySignupDetails: false,
+            loginFailed: false,
         }
+
         this.state = this.defaultState;
         this.loginDetails = this.loginDetails.bind(this);
         this.submitLogin = this.submitLogin.bind(this);
@@ -24,12 +33,11 @@ class App extends Component{
         if (!this.state.displayLoginDetails){
             this.setState({displayLoginDetails: true});
         } else {
-            this.setState({displayLoginDetails: false});
+            this.setState({displayLoginDetails: false, loginFailed: false});
         }
     }
 
     signupDetails(){
-        console.log('inside signupDetails func')
         //trigger the signup popup box
         if (!this.state.displaySignupDetails){
             this.setState({displaySignupDetails: true});
@@ -47,7 +55,9 @@ class App extends Component{
         //test case for user log in
         if (submittedInfo.username === 'hello' && submittedInfo.password === 'world'){
             console.log('updating state')
-            return this.setState({isLoggedIn: true})
+            return this.setState({isLoggedIn: true, loginFailed: false, username: submittedInfo.username})
+        } else {
+            return this.setState({loginFailed: true})
         }
 
             // //Checking to see if username is in the database
@@ -97,29 +107,35 @@ class App extends Component{
                 submittedInfo.weight + ' ' + submittedInfo.height+ ' ' + submittedInfo.sex)
 
         //include goal-macros?    
-        fetch('http://localhost:3000/user/signup',{
+        fetch('http://localhost:3000/user/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(submittedInfo),
         })
+        .then((data)=>{
+
+        })
     }
 
     render(){
         // this.state.isLoggedIn is false, render the LoginContainer
             //dashcontainer will have props of users-data
-            {this.state.isLoggedIn ? <DashboardContainer /> : <LoginContainer />}
+
        
         return(
             <div>
                 {this.state.isLoggedIn ? 
-                <DashboardContainer />//if true, dashboard
+                <DashboardContainer 
+                    username = {this.state.username}
+                />//if true, dashboard
                 :
-                <LoginContainer                   //if false, log in box (user, pws)
+                <LoginContainer                   
                     loginDetails = {this.loginDetails}
-                    displayLoginDetails = {this.state.displayLoginDetails}//
+                    displayLoginDetails = {this.state.displayLoginDetails}
                     submitLogin = {this.submitLogin}
+                    loginFailed = {this.state.loginFailed}
                     signupDetails = {this.signupDetails}
                     displaySignupDetails = {this.state.displaySignupDetails}
                     submitSignup = {this.submitSignup}

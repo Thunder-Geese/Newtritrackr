@@ -20,6 +20,7 @@ class LoginContainer extends Component{
                 <LoginDetails 
                     loginDetails = {this.props.loginDetails}
                     submitLogin = {this.props.submitLogin}
+                    loginFailed = {this.props.loginFailed}
                 /> 
                 : null
 
