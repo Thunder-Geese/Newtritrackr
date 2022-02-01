@@ -2,6 +2,8 @@ const user = require('../model')
 
 const userController = {}
 
+//NEED TO ADD ERROR HANDLING
+
 //verify user exists in database 
 userController.verifyLogin = (req, res, next) =>{
     const { username, password } = req.body;
@@ -11,6 +13,7 @@ userController.verifyLogin = (req, res, next) =>{
     const userInfo = `SELECT * FROM userinfo WHERE username='${username}'` 
     user.query(userInfo)
         .then(data => {
+            console.log(data.rows[0])
                 //compare the req.body.password to the encrypted password
                 if (data.rows[0].password === password) {
                     let userID = data.rows[0]._id
@@ -26,6 +29,7 @@ userController.verifyLogin = (req, res, next) =>{
                         height: height, 
                         sex: sex 
                     }
+                    
                     return next()
                 }
             res.locals.info = {
@@ -35,22 +39,23 @@ userController.verifyLogin = (req, res, next) =>{
         })
 }
 
-// username: test
-// pword: testpw
 
-//create and save a new User into the database.
+
 userController.createUser = (req, res, next) =>{
 
     const { username, password, age, weight, height, sex } = req.body;
 
     const userInfo = `SELECT * FROM userinfo WHERE username = '${username}'`
     //query into db
+
+    //NEED TO ADD ENCRYPTION
     user.query(userInfo)
     .then(data => {
             //if the database returns a row of data, it found the username in the DB
             //so, the user already exists
             if (data.rows[0]){
                 res.locals.info = {
+                    //user already created
                     validSignup: false
                 }
                 return next()

@@ -14,12 +14,22 @@ class App extends Component{
         //loginFailed: displays 'error: failed to log in' if true
 
         this.defaultState = {
-            isLoggedIn: true,
+            isLoggedIn: false,
             username: null,
+            userId: null,
             displayLoginDetails: false,
             displaySignupDetails: false,
             displayAddMealDetails: false,
+            displayMealNamePopup: false,
             loginFailed: false,
+            mealName: null,
+            ingredientList: [],
+            mealArray: [{meal_name: 'No meal data.',
+                        protein: 0,
+                        carbs: 0,
+                        calories: 0,
+                        fat: 0       
+                    }],
         }
 
         this.state = this.defaultState;
@@ -28,8 +38,14 @@ class App extends Component{
         this.submitSignup = this.submitSignup.bind(this);
         this.signupDetails = this.signupDetails.bind(this);
         this.addMealDetails = this.addMealDetails.bind(this);
-    }
-
+        this.mealNamePopup = this.mealNamePopup.bind(this);
+        this.addIngredient = this.addIngredient.bind(this);
+        this.getMealData = this.getMealData.bind(this);
+        this.addMeal = this.addMeal.bind(this);
+    }   
+    
+    
+    
     loginDetails(){
         //trigger the login popup box
         if (!this.state.displayLoginDetails){
@@ -52,8 +68,61 @@ class App extends Component{
         if (!this.state.displayAddMealDetails){
             this.setState({displayAddMealDetails: true});
         } else {
-            this.setState({displayAddMealDetails: false});
+            this.setState({displayAddMealDetails: false, displayMealNamePopup: false});
         }
+    }
+
+    mealNamePopup(){
+        if (!this.state.displayMealNamePopup){
+            this.setState({displayMealNamePopup: true});
+        } else {
+            this.setState({displayMealNamePopup: false});
+        }
+    }
+
+    addIngredient(ingredientText, event){
+        event.preventDefault();
+        let newIngredients = this.state.ingredientList;
+        newIngredients.push(ingredientText.current.value);
+        ingredientText.current.value = '';
+        this.setState({ingredientList: newIngredients})
+    }
+    
+    addMeal(mealName, event) {
+        event.preventDefault();
+
+        let ingredientsArray = this.state.ingredientList;
+        const submittedInfo = {meal_name: mealName.current.value, ingredients: ingredientsArray, user_id: this.state.userId}
+        fetch('/meal/add', {
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body:JSON.stringify(submittedInfo)
+        })
+        .then(data => data.json())
+        .then(data =>{
+            return this.setState({displayMealNamePopup: false, displayAddMealDetails: false, mealArray: data, ingredientList: []})
+        })
+        
+        
+    }
+    
+    
+    getMealData(){
+        const submittedInfo = {user_id: this.state.userId}
+            
+            fetch('/meal', {
+                 method: 'POST',
+                 headers: {
+                    'Content-type': 'application/json'
+                 },
+                 body: JSON.stringify(submittedInfo)
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    this.setState({mealArray: data})
+                })
     }
 
     submitLogin(usernameText, passwordText, event){
@@ -70,7 +139,8 @@ class App extends Component{
             .then(data => data.json())
             .then(data =>{
                 if (data.info.validLogin){
-                    return this.setState({isLoggedIn: true, loginFailed: false, username: submittedInfo.username})
+                    console.log(data.info.userID)
+                    return this.setState({isLoggedIn: true, loginFailed: false, username: submittedInfo.username, userId: data.info.userID})
                 } else {
                     return this.setState({loginFailed: true})
                 }
@@ -111,8 +181,8 @@ class App extends Component{
         })
         .then(data=>data.json())
         .then(data=>{
-            if (data.info.validSignup){
-                return this.setState({isLoggedIn: true, loginFailed: false, username: submittedInfo.username})
+            if (data.info.validLogin){
+                return this.setState({isLoggedIn: true, loginFailed: false, username: submittedInfo.username, userId: data.info.userID})
             } else {
                 return this.setState({isLoggedIn: false})
             }
@@ -126,8 +196,16 @@ class App extends Component{
                 {this.state.isLoggedIn ? 
                 <DashboardContainer 
                     username={this.state.username}
+                    userId={this.state.userId}
+                    getMealData={this.getMealData}
                     addMealDetails={this.addMealDetails}
+                    mealNamePopup={this.mealNamePopup}
+                    displayMealNamePopup={this.state.displayMealNamePopup}
                     displayAddMealDetails={this.state.displayAddMealDetails}
+                    ingredientList={this.state.ingredientList}
+                    addIngredient={this.addIngredient}
+                    mealArray={this.state.mealArray}
+                    addMeal={this.addMeal}
                 />//if true, dashboard
                 :
                 <LoginContainer                   

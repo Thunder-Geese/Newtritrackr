@@ -5,7 +5,7 @@ class DailyGoals extends Component{
     render(){
         return(
             <div className='dailyGoals'>
-                DailyGoals
+                Daily Goals
             </div>
         )
     }

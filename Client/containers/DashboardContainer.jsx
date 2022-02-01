@@ -15,9 +15,18 @@ class DashboardContainer extends Component{
                         username={this.props.username}
                         addMealDetails={this.props.addMealDetails}
                         displayAddMealDetails={this.props.displayAddMealDetails}
+                        mealNamePopup={this.props.mealNamePopup}
+                        displayMealNamePopup={this.props.displayMealNamePopup}
+                        addIngredient={this.props.addIngredient}
+                        ingredientList={this.props.ingredientList}
+                        addMeal={this.props.addMeal}
                     />
                     <DailyGoals />
-                    <TodaysMeals />
+                    <TodaysMeals 
+                        userId={this.props.userId}
+                        getMealData={this.props.getMealData}
+                        mealArray={this.props.mealArray}
+                    />
                     <WeeklyGoals />
                 </div>
             </div>
