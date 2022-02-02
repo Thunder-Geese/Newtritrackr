@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve --open",
+    "dev": "concurrently \"npm run devServer\" \"npm run client\" ",
+    "client": "webpack serve --open",
+    "devServer": "nodemon server/server.js",
     "build": "webpack",
     "start": "node server/server.js"
   },
@@ -26,8 +28,10 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "babel-loader": "^8.2.3",
+    "concurrently": "^7.0.0",
     "css-loader": "^6.5.1",
     "html-webpack-plugin": "^5.5.0",
+    "nodemon": "^2.0.15",
     "sass": "^1.49.0",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
