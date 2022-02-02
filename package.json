@@ -1,20 +1,23 @@
 {
-  "name": "goblin-shark",
+  "name": "newtritrackr",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve --open",
+    "client": "webpack serve --open",
+    "dev": "concurrently \"npm run client\" \"npm run devServer\" ",
     "build": "webpack",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "devStart": "nodemon server/server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "pantless-thundergoose",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.25.0",
     "express": "^4.17.2",
+    "mongoose": "^6.1.10",
     "pg": "^8.7.1",
     "postgres": "^1.0.2",
     "react": "^17.0.2",
