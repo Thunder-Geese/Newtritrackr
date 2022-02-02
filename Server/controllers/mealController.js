@@ -1,4 +1,4 @@
-const meal = require('../model');
+const meal = require('../models/mealModel');
 const axios = require('axios');
 const mealController = {};
 

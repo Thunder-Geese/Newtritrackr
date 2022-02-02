@@ -6,6 +6,22 @@ const mealController = require('./controllers/mealController.js');
 
 const PORT = 3000;
 
+//////// ******** Mongo DB Connection
+require('dotenv').config();
+const mongoose = require('mongoose');
+console.log(process.env.DB_CONNECTION);
+const MG_URI = process.env.DB_CONNECTION;
+
+mongoose
+  .connect(MG_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'newtritrakr',
+  })
+  .then(() => console.log('Database connected'))
+  .catch(() => console.log('Error occured while connecting to database'));
+/////// *****************
+
 app.use(express.json());
 
 //user signup
