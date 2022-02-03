@@ -2,8 +2,9 @@ const request = require('supertest');
 const server = 'http://localhost:3000';
 const path = require('path');
 // const assert = require('assert');
-const express = require('express');
-const app = express();
+// const express = require('express');
+// const app = express();
+const app = require('../Server/server.js');
 
 describe('Initial Test', () => {
   describe('/tests', () => {
