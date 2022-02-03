@@ -5,19 +5,10 @@ const mealController = {};
 //// add meal to db
 mealController.addMeal = (req, res, next) => {
   console.log('in addmeal middleware');
+  const { username, mealInfo } = req.body;
+  console.log(mealInfo);
   mealModel
-    .create({
-      name: 'GOULASH',
-      description: 'Does this one have 4 ingredient objects in the ingredients array?',
-      type: '4 ingredients',
-      ingredients: [
-        {
-          name: 'spaghetti',
-          amount: 2,
-          unit: 'cups',
-        },
-      ],
-    })
+    .create(mealInfo)
     .then(result => {
       res.locals.addedMeal = result;
       return next();
@@ -28,6 +19,33 @@ mealController.addMeal = (req, res, next) => {
         message: 'Error in mealController.addMeal. See log for more details.',
       });
     });
+
+  // grab meal id after creating entry
+  // add meal id to username document meals property
+
+  // mealModel
+  //   .create({
+  //     name: 'GOULASH',
+  //     description: 'Does this one have 4 ingredient objects in the ingredients array?',
+  //     type: '4 ingredients',
+  //     ingredients: [
+  //       {
+  //         name: 'spaghetti',
+  //         amount: 2,
+  //         unit: 'cups',
+  //       },
+  //     ],
+  //   })
+  //   .then(result => {
+  //     res.locals.addedMeal = result;
+  //     return next();
+  //   })
+  //   .catch(err => {
+  //     return next({
+  //       log: `Error in mealController.addMeal. ERROR: ${err}`,
+  //       message: 'Error in mealController.addMeal. See log for more details.',
+  //     });
+  //   });
 };
 //// find that meal and read it
 function testfind() {
