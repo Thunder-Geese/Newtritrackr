@@ -29,7 +29,7 @@ beforeAll(async () => {
   // console.log(connection);
 });
 
-describe('post route to add meal', () => {
+xdescribe('post route to add meal', () => {
   it('should add a meal into db', async () => {
     console.log('in should add a meal');
     const res = await request(app).post('/tests').send(testEntry);
@@ -58,25 +58,37 @@ describe('Route to /users', () => {
     const fakeUser = {
       username: 'jacksonizliterallyDABEST',
       password: 'lookatmycleverpassword',
+      meal_ids: [],
     };
 
-    const duplicateUsername = {
-      username: 'jacksonizliterallyDABEST',
-      password: 'thisisanotheruserwiththesameusername',
-    };
     let res;
 
     beforeEach(async () => {
       res = await request(app).post('/users/signup').send(fakeUser);
+      console.log(res);
+    });
+
+    afterEach(async () => {
+      await User.deleteMany({});
+      // .then(() => console.log('deleted all users'))
+      // .catch(() => console.log('Jackson messed up'));
     });
 
     it('should add new user to database', async () => {
+      // res = await request(app).post('/users/signup').send(fakeUser);
+      console.log({ username: fakeUser.username });
       const query = await User.findOne({ username: fakeUser.username });
+      console.log(query);
       expect(query).not.toEqual(null);
     });
 
     it('should respond correctly to client on unsuccesful signup', async () => {
-      // const res = await request(app).post('/users/signup').send(fakeUser);
+      const result = await User.create({
+        username: 'jacksonizliterallyDABEST',
+        password: 'itsadifferentpasswordtho',
+        meal_ids: [],
+      });
+      console.log('result', result.body);
       expect(res.statusCode).toEqual(400);
       expect(res.body.validSignup).toEqual(false);
     });

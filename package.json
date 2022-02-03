@@ -33,6 +33,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "babel-loader": "^8.2.3",
+    "bcrypt": "^5.0.1",
     "concurrently": "^7.0.0",
     "css-loader": "^6.5.1",
     "dotenv": "^15.0.0",

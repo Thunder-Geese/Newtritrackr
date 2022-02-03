@@ -4,41 +4,42 @@ const app = express();
 const userController = require('./controllers/userController.js');
 const mealController = require('./controllers/mealController.js');
 const dbController = require('./dbConnection.js');
+const user = require('./models/userModel.js');
 // require('dotenv').config();
 const PORT = 3000;
 
 //////// ******** Mongo DB Connection
-// require('dotenv').config();
-// const mode = process.env.MODE;
-// console.log('MODE', process.env.MODE);
-// console.log('PROD DATABASE URI', process.env.DB_PROD_CONNECTION);
-// console.log('DEV DATABASE URI', process.env.DB_DEV_CONNECTION);
+require('dotenv').config();
+const mode = process.env.MODE;
+console.log('MODE', process.env.MODE);
+console.log('PROD DATABASE URI', process.env.DB_PROD_CONNECTION);
+console.log('DEV DATABASE URI', process.env.DB_DEV_CONNECTION);
 
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-// if (mode === 'prod') {
-//   console.log(process.env.DB_PROD_CONNECTION);
-//   const MG_URI = process.env.DB_PROD_CONNECTION;
-//   mongoose
-//     .connect(MG_URI, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//       dbName: 'newtritrakr-prod',
-//     })
-//     .then(() => console.log('Production database connected'))
-//     .catch(() => console.log('Error occured while connecting to database'));
-// } else if (mode === 'dev') {
-//   console.log(process.env.DB_DEV_CONNECTION);
-//   const MG_URI = process.env.DB_DEV_CONNECTION;
-//   mongoose
-//     .connect(MG_URI, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//       dbName: 'newtritrakr-dev',
-//     })
-//     .then(() => console.log('Development database connected'))
-//     .catch(() => console.log('Error occured while connecting to database'));
-// }
+if (mode === 'prod') {
+  console.log(process.env.DB_PROD_CONNECTION);
+  const MG_URI = process.env.DB_PROD_CONNECTION;
+  mongoose
+    .connect(MG_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      dbName: 'newtritrakr-prod',
+    })
+    .then(() => console.log('Production database connected'))
+    .catch(() => console.log('Error occured while connecting to database'));
+} else if (mode === 'dev') {
+  console.log(process.env.DB_DEV_CONNECTION);
+  const MG_URI = process.env.DB_DEV_CONNECTION;
+  mongoose
+    .connect(MG_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      dbName: 'newtritrakr-dev',
+    })
+    .then(() => console.log('Development database connected'))
+    .catch(() => console.log('Error occured while connecting to database'));
+}
 /////// *****************
 
 app.use(express.json());
@@ -51,16 +52,24 @@ app.post('/tests', mealController.addMeal, (req, res) => {
 
 //user signup
 // PTG: Pretty sure verifylogin is unecessary
-app.post('/users/signup', userController.createUser, (req, res) => {
-  return res.status(200).json(res.locals);
-});
+app.post(
+  '/users/signup',
+  userController.checkUniqueUsername,
+  userController.createUser,
+  (req, res) => {
+    console.log(res.locals);
+    if (res.locals.validSignup) res.status(200);
+    else res.status(400);
+    return res.json(res.locals);
+  }
+);
 
 //user login
 // PTG: add Router for User
 // PTG: change route to /users/login
-app.post('/users', userController.verifyLogin, (req, res) => {
-  return res.status(200).json(res.locals);
-});
+// app.post('/users', userController.verifyLogin, (req, res) => {
+//   return res.status(200).json(res.locals);
+// });
 
 //meals
 // PTG: add Router for Meals
