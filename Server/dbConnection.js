@@ -1,16 +1,14 @@
-const dbController = {};
+require('dotenv').config();
+const mongoose = require('mongoose');
 
-dbController.connect = (req, res, next) => {
-  require('dotenv').config();
+dbConnection = (req, res) => {
   const mode = process.env.MODE;
   console.log('MODE', process.env.MODE);
-  console.log('PROD DATABASE URI', process.env.DB_PROD_CONNECTION);
-  console.log('DEV DATABASE URI', process.env.DB_DEV_CONNECTION);
-
-  const mongoose = require('mongoose');
+  // console.log('PROD DATABASE URI', process.env.DB_PROD_CONNECTION);
+  // console.log('DEV DATABASE URI', process.env.DB_DEV_CONNECTION);
 
   if (mode === 'prod') {
-    console.log(process.env.DB_PROD_CONNECTION);
+    // console.log(process.env.DB_PROD_CONNECTION);
     const MG_URI = process.env.DB_PROD_CONNECTION;
     mongoose
       .connect(MG_URI, {
@@ -20,11 +18,10 @@ dbController.connect = (req, res, next) => {
       })
       .then(() => {
         console.log('Production database connected');
-        return next();
       })
       .catch(() => console.log('Error occured while connecting to database'));
   } else if (mode === 'dev') {
-    console.log(process.env.DB_DEV_CONNECTION);
+    // console.log(process.env.DB_DEV_CONNECTION);
     const MG_URI = process.env.DB_DEV_CONNECTION;
     mongoose
       .connect(MG_URI, {
@@ -34,10 +31,12 @@ dbController.connect = (req, res, next) => {
       })
       .then(() => {
         console.log('Development database connected');
-        return next();
       })
-      .catch(() => console.log('Error occured while connecting to database'));
+      .catch(err => {
+        console.log('Error occured while connecting to database');
+        console.log(err);
+      });
   }
 };
 
-module.exports = dbController;
+module.exports = dbConnection;

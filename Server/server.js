@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const userController = require('./controllers/userController.js');
 const mealController = require('./controllers/mealController.js');
-const dbController = require('./controllers/dbController.js');
+const dbController = require('./dbConnection.js');
 // require('dotenv').config();
 const PORT = 3000;
 
@@ -44,21 +44,21 @@ const PORT = 3000;
 app.use(express.json());
 
 //Create route for supertest
-app.post('/tests', dbController.connect, mealController.addMeal, (req, res) => {
+app.post('/tests', mealController.addMeal, (req, res) => {
   console.log('in final middleware of /tests post request');
   return res.status(200).json(res.locals.addedMeal);
 });
 
 //user signup
 // PTG: Pretty sure verifylogin is unecessary
-app.post('/user/signup', userController.createUser, userController.verifyLogin, (req, res) => {
+app.post('/users/signup', userController.createUser, (req, res) => {
   return res.status(200).json(res.locals);
 });
 
 //user login
 // PTG: add Router for User
-// PTG: change route to /user/login
-app.post('/user', userController.verifyLogin, (req, res) => {
+// PTG: change route to /users/login
+app.post('/users', userController.verifyLogin, (req, res) => {
   return res.status(200).json(res.locals);
 });
 

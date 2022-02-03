@@ -5,8 +5,9 @@ const mealController = {};
 //// add meal to db
 mealController.addMeal = (req, res, next) => {
   console.log('in addmeal middleware');
+  // console.log('Request Object', req);
   const { username, mealInfo } = req.body;
-  console.log(mealInfo);
+  console.log('mealInfo', mealInfo);
   mealModel
     .create(mealInfo)
     .then(result => {

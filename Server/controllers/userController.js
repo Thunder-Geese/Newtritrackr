@@ -1,4 +1,5 @@
 const user = require('../models/userModel');
+const bcrypt = require('bcrypt');
 
 const userController = {};
 
@@ -42,16 +43,39 @@ userController.verifyLogin = (req, res, next) => {
   });
 };
 
+userController.checkUniqueUsername = (req, res, next) => {
+  const { username } = req.body;
+  user.findOne({ username: username }, (err, data) => {
+    if (err) {
+      return next({
+        log: `Error occured in userController.checkUniqueUsername. ERROR: ${err}`,
+        message: { err: 'Jackson already typed this and now I have to type it again SMH.' },
+      });
+    }
+    if (data !== null) {
+      res.locals.uniqueUser = false;
+      return next();
+    } else {
+      res.locals.uniqueUser = true;
+      return next();
+    }
+  });
+};
+
 userController.createUser = (req, res, next) => {
   // PTG: simplify to just username and password
-  const { username, password, age, weight, height, sex } = req.body;
-
+  const { username, password } = req.body;
   // PTG: SELECT from db to see if username already exist
   // PTG: Can simplify to just reading username, not all
-  const userInfo = `SELECT * FROM userinfo WHERE username = '${username}'`;
   //query into db
-
+  if (!res.locals.uniqueUser) {
+    return next();
+  } else {
+  }
   //PTG: NEED TO ADD ENCRYPTION
+
+  /*
+  const userQuery = 'SELECT * FROM userinfo WHERE username = $1';
   user.query(userInfo).then(data => {
     //if the database returns a row of data, it found the username in the DB
     //so, the user already exists
@@ -82,6 +106,7 @@ userController.createUser = (req, res, next) => {
       });
     }
   });
+  */
 };
 
 module.exports = userController;
