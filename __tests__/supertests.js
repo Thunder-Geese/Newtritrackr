@@ -18,8 +18,15 @@ describe('Initial Test', () => {
 
       const testDupe = { ...testEntry };
 
-      it('returns a created meal', () => {
-        return request(server).post('/tests').send(testDupe).expect(200);
+      it('returns a created meal', done => {
+        request(app)
+          .post('/tests')
+          .send(testDupe)
+          .expect(200)
+          .end((err, res) => {
+            if (err) return done(err);
+            return done();
+          });
       });
     });
   });

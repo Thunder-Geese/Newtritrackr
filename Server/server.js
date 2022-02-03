@@ -44,6 +44,7 @@ app.use(express.json());
 
 //Create route for supertest
 app.post('/tests', mealController.addMeal, (req, res) => {
+  console.log('in final middleware of /tests post request');
   return res.status(200).json(res.locals.addedMeal);
 });
 
@@ -80,7 +81,8 @@ app.use('/build', express.static(path.join(__dirname, '..', 'build')));
 
 //404 handler catch all handler for unknown routes
 
-app.use('*', (req, res) => {
+app.use((req, res) => {
+  console.log('in 404');
   res.status(404).send('Not Found');
 });
 
@@ -101,3 +103,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });
+
+// module.exports = app;
