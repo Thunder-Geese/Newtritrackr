@@ -21,6 +21,20 @@ body {
     min-height: 100vh;
 }
 
+.children{
+    padding-left: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nutrition-bold{
+  padding-right: 10px;
+  font-weight: 700;
+}
+
 .centerDashboard {
     display: flex;
     align-items: center;
@@ -31,15 +45,18 @@ body {
 }
 .dashboardContainer {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 50px 50px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 25px 25px;
     grid-template-areas:
-    "addMeal dailyGoals dailyGoals"
-    "todaysMeals dailyGoals dailyGoals"
-    "todaysMeals weeklyGoals weeklyGoals";
+    "addMeal dailyGoals dailyGoals nutritionFacts"
+    "todaysMeals dailyGoals dailyGoals nutritionFacts"
+    "todaysMeals dailyGoals dailyGoals nutritionFacts"
+    "todaysMeals dailyGoals dailyGoals nutritionFacts";
     height: 75vh;
-    width: 75vw;
+    width: 100%;
+    max-width: 1100px;
+    margin: auto 20px;
     font-family: 'Readex Pro', sans-serif;
 }
 
@@ -60,10 +77,10 @@ body {
 .addMeal, .todaysMeals, .dailyGoals, .weeklyGoals {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     font-style:'khand', sans-serif;
     align-items: center;
-    font-size: 60px;
+    /* font-size: 60px; */
     border: 1px solid rgba(185, 163, 245, 0.789);
     border-radius: 10px;
     background-color: rgb(154, 208, 212);
@@ -83,6 +100,9 @@ body {
 }
 .weeklyGoals{
     grid-area: weeklyGoals;
+}
+.nutritionFacts{
+    grid-area: nutritionFacts;
 }
 
 .loginDetails, .signupDetails, .addMealDetails {
@@ -312,4 +332,41 @@ body {
     margin-left: 20px;
     font-size: 20px;
     color: black;
+}
+.nutritionFacts {
+    background: white;
+    border: 1px solid black;
+    padding: 0 10px;
+    display: grid;
+    height: 100%;
+    box-sizing: border-box;
+    grid-template-rows: 30px 40px 40px 1fr 1fr 1fr 65px;
+}
+.nutritionFacts > * {
+    box-sizing: border-box;
+}
+.nutritionFacts h2 {
+    white-space: nowrap;
+    margin: 0;
+}
+.nutritionFacts .servingSize {
+    border-top: 1px solid grey;
+    border-bottom: 7px solid black;
+}
+.nutritionFacts .calories{
+    border-bottom: 3px solid black; 
+}
+.nutritionFacts .calories p{
+    margin: 0;
+    font-size: 12px;
+}
+.nutritionFacts .intake {
+    border-bottom: 7px solid black; 
+}
+.nutritionFacts .vitamins {
+    border-bottom: 3px solid black; 
+}
+.nutritionFacts footer {
+    font-size: 10px;
+    text-align: justify;
 }

@@ -31,6 +31,23 @@ class App extends Component {
         calories: 0,
         fat: 0
       }],
+      nutritionFacts: {
+        calories: 230,
+        totalFat: { percent: '10%', amount: 8, unit: 'g' },
+        satFat: { percent: '5%', amount: 1, unit: 'g' },
+        transFat: { amount: 0, unit: 'g' },
+        cholestrol: { percent: '0%', amount: 0, unit: 'mg' },
+        sodium: { percent: '7%', amount: 160, unit: 'mg' },
+        carbs: { percent: '13%', amount: 37, unit: 'g' },
+        fiber: { percent: '14%', amount: 4, unit: 'g' },
+        sugar: { amount: 12, unit: 'g' },
+        protein: { amount: 3, unit: 'g' },
+        vitaminA: { percent: '20%', amount: 2, unit: 'mcg' },
+        vitaminD: { percent: '10%', amount: 16, unit: 'mcg' },
+        vitaminC: { percent: '36%', amount: 200, unit: 'mg' },
+        iron: { percent: '45%', amount: 8, unit: 'mcg' },
+        potassium: { percent: '6%', amount: 240, unit: 'mg' }
+      }
     }
 
     this.state = this.defaultState;
@@ -200,6 +217,7 @@ class App extends Component {
       <div>
         {this.state.isLoggedIn ?
           <DashboardContainer
+            nutritionFacts={this.state.nutritionFacts}
             username={this.state.username}
             userId={this.state.userId}
             getMealData={this.getMealData}

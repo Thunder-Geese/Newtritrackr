@@ -3,15 +3,16 @@ import AddMeal from '../components/AddMeal.jsx'
 import DailyGoals from '../components/DailyGoals.jsx'
 import TodaysMeals from '../components/TodaysMeals.jsx'
 import WeeklyGoals from '../components/WeeklyGoals.jsx'
+import Nutrition from '../components/Nutrition.jsx'
 
-class DashboardContainer extends Component{
+class DashboardContainer extends Component {
 
-    render(){
+    render() {
         console.log(this.props.username)
-        return(
+        return (
             <div className='centerDashboard'>
                 <div className='dashboardContainer'>
-                    <AddMeal 
+                    <AddMeal
                         username={this.props.username}
                         addMealDetails={this.props.addMealDetails}
                         displayAddMealDetails={this.props.displayAddMealDetails}
@@ -22,12 +23,12 @@ class DashboardContainer extends Component{
                         addMeal={this.props.addMeal}
                     />
                     <DailyGoals />
-                    <TodaysMeals 
+                    <TodaysMeals
                         userId={this.props.userId}
                         getMealData={this.props.getMealData}
                         mealArray={this.props.mealArray}
                     />
-                    <WeeklyGoals />
+                    <Nutrition nutritionFacts={this.props.nutritionFacts}></Nutrition>
                 </div>
             </div>
         )
