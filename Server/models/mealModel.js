@@ -16,4 +16,4 @@ const mealSchema = new Schema({
   // PTG: add property for nutritional info
 });
 
-module.exports = mongoose.Model('Meals', mealSchema);
+module.exports = mongoose.model('Meals', mealSchema);

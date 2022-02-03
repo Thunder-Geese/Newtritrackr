@@ -1,6 +1,66 @@
-const meal = require('../models/mealModel');
+const mealModel = require('../models/mealModel');
 const axios = require('axios');
 const mealController = {};
+
+//// add meal to db
+mealController.addMeal = (req, res, next) => {
+  mealModel
+    .create({
+      name: 'GOULASH',
+      description: 'Does this one have 4 ingredient objects in the ingredients array?',
+      type: '4 ingredients',
+      ingredients: [
+        {
+          name: 'spaghetti',
+          amount: 2,
+          unit: 'cups',
+        },
+      ],
+    })
+    .then(result => {
+      res.locals.addedMeal = result;
+      return next();
+    })
+    .catch(err => {
+      return next({
+        log: `Error in mealController.addMeal. ERROR: ${err}`,
+        message: 'Error in mealController.addMeal. See log for more details.',
+      });
+    });
+};
+//// find that meal and read it
+function testfind() {
+  console.log('reading meals from db');
+  mealModel
+    .find({})
+    .then(result => {
+      console.log(result);
+      console.log(result[result.length - 1].ingredients);
+    })
+    .catch(err => console.log(err));
+}
+function testdb() {
+  console.log('adding meal to db');
+  mealModel
+    .create({
+      name: 'THIS GOES TO PROD DB 1',
+      description: 'Does this one have 4 ingredient objects in the ingredients array?',
+      type: '4 ingredients',
+      ingredients: [
+        {
+          name: 'spaghetti',
+          amount: 2,
+          unit: 'cups',
+        },
+      ],
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+}
+// mealController.addMeal();
+
+// testdb();
+// testfind();
 
 //NEED TO ADD ERROR HANDLING
 
