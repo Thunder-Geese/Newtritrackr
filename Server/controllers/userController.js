@@ -136,4 +136,17 @@ userController.createUser = async (req, res, next) => {
   */
 // };
 
+userController.login = (req, res, next) => {
+  const { username, password } = req.body;
+  user.findOne({ username }).then(data => {
+    bcrypt.compare(password, data.password, function (err, result) {
+      if (!result) {
+        return next('err'`, ${err}`);
+      } else {
+        next();
+      }
+    });
+  });
+};
+
 module.exports = userController;

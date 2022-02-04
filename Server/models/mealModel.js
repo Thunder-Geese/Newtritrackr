@@ -9,11 +9,26 @@ const ingredientSchema = new Schema({
 });
 
 const nutrientSchema = new Schema({
-  totalfat: String,
-  cholesterol: String,
-  sodium: String,
-  totalcarbs: String,
-  protein: String,
+  amount: { type: Number },
+  unit: { type: String },
+});
+
+const nutritionFactsSchema = new Schema({
+  calories: { type: Number },
+  totalFat: nutrientSchema,
+  satFat: nutrientSchema,
+  transFat: nutrientSchema,
+  cholestrol: nutrientSchema,
+  sodium: nutrientSchema,
+  carbs: nutrientSchema,
+  fiber: nutrientSchema,
+  sugar: nutrientSchema,
+  protein: nutrientSchema,
+  vitaminA: nutrientSchema,
+  vitaminD: nutrientSchema,
+  vitaminC: nutrientSchema,
+  iron: nutrientSchema,
+  potassium: nutrientSchema,
 });
 
 const mealSchema = new Schema({
@@ -22,7 +37,7 @@ const mealSchema = new Schema({
   type: { type: String },
   ingredients: [ingredientSchema],
   // PTG: add property for nutritional info
-  nutrient: nutrientSchema,
+  nutrient: nutritionFactsSchema,
 });
 
 module.exports = mongoose.model('Meals', mealSchema);

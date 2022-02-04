@@ -101,38 +101,103 @@ mealController.getMealsInfo = (req, res, next) => {
 };
 
 //controller to add a meal to the DB
-mealController.addMeals = (req, res, next) => {
-  console.log('adding a meal');
+mealController.queryAPI = async (req, res, next) => {
+  console.log('querying api middleware');
 
   // PTG: build out more nutrient info
-  let nutrientObject = {
-    protein: 0,
-    fat: 0,
-    carbs: 0,
+
+  // let nutrientObject = {
+  //   protein: 0,
+  //   fat: 0,
+  //   carbs: 0,
+  //   calories: 0,
+  // };
+
+  /*
+  "SUGAR": {
+    "label": "Sugars, total",
+    "quantity": 0.042,
+    "unit": "g"
+  },
+  */
+
+  const nutritionFacts = {
     calories: 0,
+    totalFat: {},
+    satFat: {},
+    transFat: {},
+    cholestrol: {},
+    sodium: {},
+    carbs: {},
+    fiber: {},
+    sugar: {},
+    protein: {},
+    vitaminA: {},
+    vitaminD: {},
+    vitaminC: {},
+    iron: {},
+    potassium: {},
   };
 
+  // {
+  //   totalFat: {amount: 10, unit: 'g'}
+  // }
+
   try {
-    queryApi();
+    let apiSearch =
+      'https://api.edamam.com/api/nutrition-data?app_id=ecfc207b&app_key=9b63181977059acf785ca3bd3b17cb36%20%09&nutrition-type=cooking&ingr=2%20cups%20spaghetti%2C%201%20cup%20tomatoes%2C%204%20cups%20parmesean%20cheese%2C%201%2F2%20cup%20peas';
+
+    const result = await axios.get(apiSearch);
+    let data = result.data;
+    console.log(data);
+
+    nutritionFacts.vitaminD.amount = data.totalNutrients.VITD.quantity;
+    nutritionFacts.vitaminD.unit = data.totalNutrients.VITD.unit;
+
+    console.log(nutritionFacts);
+    return next();
   } catch {
-    console.log('error');
+    // console.log('error');
+    return next({
+      log: 'error in query',
+    });
   }
 
   //async func to query the edamam API
   // PTG: Switch to nutrition api on edamam instead of meals
-  async function queryApi() {
-    for (let i = 0; i < req.body.ingredients.length; i++) {
-      let apiSearch = `https://api.edamam.com/api/food-database/v2/parser?app_id=f7bc40de&app_key=72cc5c040a857910e84239e6daad750c&ingr=${req.body.ingredients[i]}`;
-      await axios.get(apiSearch).then(data => {
-        console.log(data.data.hints[0].food.nutrients.PROCNT);
-        nutrientObject.protein += data.data.hints[0].food.nutrients.PROCNT;
-        nutrientObject.fat += data.data.hints[0].food.nutrients.FAT;
-        nutrientObject.carbs += data.data.hints[0].food.nutrients.CHOCDF;
-        nutrientObject.calories += data.data.hints[0].food.nutrients.ENERC_KCAL;
-      });
-    }
-    return addToDatabase();
-  }
+  // https://api.edamam.com/api/nutrition-data?app_id=ecfc207b&app_key=9b63181977059acf785ca3bd3b17cb36%20%09&nutrition-type=cooking&ingr=
+
+  // async function queryApi() {
+  //   for (let i = 0; i < req.body.ingredients.length; i++) {
+
+  // loop through the data object
+  // for (const item in data) {
+  //   console.log(item);
+  //   if (item === 'VITD') {
+  //     console.log('found vitamin d');
+  //     nutritionFacts.vitaminD.amount = item.quantity;
+  //     nutritionFacts.vitaminD.unit = item.unit;
+  // }
+  // if (item === )
+  // find all instances that match nutrition facts
+
+  // if the subobject is "VITD"
+  // make a new nutrient entry for vitamin D
+  // save that into a variable, vitaminD
+
+  // create new Meal entry
+  // title and description
+  // and then ppopulate nutrition facts property with all these ^^ variables
+
+  // console.log(data.data.hints[0].food.nutrients.PROCNT);
+  // nutrientObject.protein += data.data.hints[0].food.nutrients.PROCNT;
+  // nutrientObject.fat += data.data.hints[0].food.nutrients.FAT;
+  // nutrientObject.carbs += data.data.hints[0].food.nutrients.CHOCDF;
+  // nutrientObject.calories += data.data.hints[0].food.nutrients.ENERC_KCAL;
+  // });
+  // }
+  // return addToDatabase();
+  // }
 
   //func to add to the SQL database
   // PTG: Add meal name, description, ingredients and amounts to DB as well as nutitrional info

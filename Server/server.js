@@ -74,9 +74,14 @@ app.post(
 //meals
 // PTG: add Router for Meals
 // -- change to mealS
-app.post('/meal/add', mealController.addMeals, mealController.getMealsInfo, (req, res) => {
-  return res.status(200).json(res.locals);
-});
+
+app.post(
+  '/meals/add',
+  /*mealController.addMeals, mealController.getMealsInfo,*/ mealController.queryAPI,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  }
+);
 
 app.post('/meal', mealController.getMealsInfo, (req, res) => {
   console.log('sending to client: ', res.locals);
