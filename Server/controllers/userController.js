@@ -1,4 +1,5 @@
-const user = require('../model');
+const user = require('../models/userModel');
+const bcrypt = require('bcrypt');
 
 const userController = {};
 
@@ -42,16 +43,66 @@ userController.verifyLogin = (req, res, next) => {
   });
 };
 
-userController.createUser = (req, res, next) => {
-  // PTG: simplify to just username and password
-  const { username, password, age, weight, height, sex } = req.body;
-
+userController.checkUniqueUsername = (req, res, next) => {
   // PTG: SELECT from db to see if username already exist
   // PTG: Can simplify to just reading username, not all
-  const userInfo = `SELECT * FROM userinfo WHERE username = '${username}'`;
   //query into db
+  const { username } = req.body;
+  user.findOne({ username: username }, (err, data) => {
+    if (err) {
+      return next({
+        log: `Error occured in userController.checkUniqueUsername. ERROR: ${err}`,
+        message: { err: 'Jackson already typed this and now I have to type it again SMH.' },
+      });
+    }
+    if (data !== null) {
+      res.locals.validSignup = false;
+      return next();
+    } else {
+      res.locals.validSignup = true;
+      return next();
+    }
+  });
+};
+
+userController.createUser = async (req, res, next) => {
+  // PTG: simplify to just username and password
+  const saltRounds = 10;
+  const { username, password } = req.body;
+
+  console.log(username, password);
+
+  console.log(res.locals.validSignup);
 
   //PTG: NEED TO ADD ENCRYPTION
+  if (!res.locals.validSignup) {
+    return next();
+  } else {
+    try {
+      const hash = await bcrypt.hash(password, saltRounds);
+      // console.log(hash);
+
+      // user.create({stuff}).then(result => res.locals = result.body.username)
+
+      const result = await user.create({ username: username, password: hash, meal_ids: [] });
+      // console.log(result);
+      console.log(result.username);
+
+      res.locals.username = result.username;
+      return next();
+    } catch (err) {
+      return next({
+        log: `Error in userController.createUser. ERROR: ${err}`,
+        message: {
+          err: 'Error in userController.createUser. See log for more deets.',
+        },
+      });
+    }
+  }
+};
+
+/*
+  const userQuery = 'SELECT * FROM userinfo WHERE username = $1';
   user.query(userInfo).then(data => {
     //if the database returns a row of data, it found the username in the DB
     //so, the user already exists
@@ -81,6 +132,20 @@ userController.createUser = (req, res, next) => {
         return next();
       });
     }
+  });
+  */
+// };
+
+userController.login = (req, res, next) => {
+  const { username, password } = req.body;
+  user.findOne({ username }).then(data => {
+    bcrypt.compare(password, data.password, function (err, result) {
+      if (!result) {
+        return next('err'`, ${err}`);
+      } else {
+        next();
+      }
+    });
   });
 };
 
