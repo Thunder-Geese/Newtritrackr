@@ -28,7 +28,7 @@ class TodaysMeals extends Component {
     return (
 
       <div className='todaysMeals'>
-        <div className='loginTextLarge'>Your meals for Today:</div>
+        <div className='loginTextLarge'>Your Meals</div>
         {displayMeals}
       </div>
     )

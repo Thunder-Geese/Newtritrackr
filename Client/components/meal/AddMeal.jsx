@@ -8,7 +8,7 @@ class AddMeal extends Component {
       <div className='addMeal'>
         <div>Welcome back {this.props.username}!</div>
         <button className='buttonLoginPage' onClick={() => this.props.addMealDetails()}>Add a New Meal</button>
-        {
+        {/* {
           this.props.displayAddMealDetails ?
             <AddMealDetails
               ingredientList={this.props.ingredientList}
@@ -19,7 +19,7 @@ class AddMeal extends Component {
               addMeal={this.props.addMeal}
             />
             : null
-        }
+        } */}
       </div>
     )
   }
