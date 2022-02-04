@@ -1,0 +1,53 @@
+
+
+.children{
+  padding-left: 20px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nutrition-bold{
+  padding-right: 10px;
+  font-weight: 700;
+}
+
+.nutritionFacts {
+  background: white;
+  border: 1px solid black;
+  padding: 0 10px;
+  display: grid;
+  height: 100%;
+  box-sizing: border-box;
+  grid-template-rows: 30px 40px 40px 1fr 1fr 1fr 65px;
+}
+.nutritionFacts > * {
+  box-sizing: border-box;
+}
+.nutritionFacts h2 {
+  white-space: nowrap;
+  margin: 0;
+}
+.nutritionFacts .servingSize {
+  border-top: 1px solid grey;
+  border-bottom: 7px solid black;
+}
+.nutritionFacts .calories{
+  border-bottom: 3px solid black; 
+}
+.nutritionFacts .calories p{
+  margin: 0;
+  font-size: 12px;
+}
+.nutritionFacts .intake {
+  border-bottom: 7px solid black; 
+}
+.nutritionFacts .vitamins {
+  border-bottom: 3px solid black; 
+}
+.nutritionFacts footer {
+  font-size: 10px;
+  text-align: justify;
+}

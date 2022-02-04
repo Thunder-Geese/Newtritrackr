@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "supertest": "jest",
     "client": "webpack serve --open",
     "dev": "concurrently \"npm run client\" \"npm run devServer\" ",
     "build": "webpack",
     "start": "node server/server.js",
-    "devStart": "nodemon server/server.js"
+    "devStart": "nodemon server/server.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "pantless-thundergoose",
@@ -40,8 +40,9 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.4.7",
+    "jest-environment-jsdom": "^27.4.6",
     "nodemon": "^2.0.15",
-    "sass": "^1.49.0",
+    "sass": "^1.49.7",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
     "supertest": "^6.2.2",

@@ -1,0 +1,76 @@
+@import '../components/nutrition/nutrition.scss';
+@import '../components/meal/meal.scss';
+@import '../components/login/login.scss';
+
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Khand:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@100&family=Khand:wght@300&family=Overlock+SC&display=swap');
+
+$cream-yellow: rgb(252, 250, 205);
+
+body {
+  background-color: $cream-yellow;
+  margin: 0px;
+  padding: 0px;
+}
+.centerDashboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1px solid rgb(255, 176, 176);
+    min-height: 100vh;
+    width: 100vw;
+}
+.dashboardContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 25px 25px;
+  grid-template-areas:
+  "addMeal dailyGoals dailyGoals nutritionFacts"
+  "todaysMeals dailyGoals dailyGoals nutritionFacts"
+  "todaysMeals dailyGoals dailyGoals nutritionFacts"
+  "todaysMeals dailyGoals dailyGoals nutritionFacts";
+  height: 75vh;
+  width: 100%;
+  max-width: 1100px;
+  margin: auto 20px;
+  font-family: 'Readex Pro', sans-serif;
+}
+.addMeal{
+  grid-area: addMeal;
+  font-size: 24px;
+}
+.todaysMeals{
+  grid-area: todaysMeals;
+}
+.dailyGoals{
+  grid-area: dailyGoals;
+}
+.weeklyGoals{
+  grid-area: weeklyGoals;
+}
+.nutritionFacts{
+  grid-area: nutritionFacts;
+}
+.closeDetails{
+  background-color: transparent;
+  align-self: flex-end;
+  background-color: rgb(106, 165, 142);
+  padding: 4px;
+  color: white;
+  font-family: 'Readex Pro', sans-serif;
+  font-weight: bold;
+  border: 1px solid rgb(255, 232, 232);
+  border-radius: 10px;
+}
+.closeDetails:active{
+  background-color: rgb(169, 154, 252);
+}
+.logo {
+  height: 200px;
+}
+.logoImg{
+  height: 240px;
+  width: 240px;
+}
