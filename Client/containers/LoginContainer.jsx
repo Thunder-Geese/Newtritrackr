@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import LoginBox from '../components/LoginBox.jsx'
-import LoginDetails from '../components/LoginDetails.jsx'
-import SignupDetails from '../components/SignupDetails.jsx'
+import LoginBox from '../components/login/LoginBox.jsx'
+import LoginDetails from '../components/login/LoginDetails.jsx'
+import SignupDetails from '../components/login/SignupDetails.jsx'
 
 class LoginContainer extends Component {
   render() {

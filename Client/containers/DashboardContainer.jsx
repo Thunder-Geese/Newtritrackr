@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import AddMeal from '../components/AddMeal.jsx'
-import DailyGoals from '../components/DailyGoals.jsx'
-import TodaysMeals from '../components/TodaysMeals.jsx'
+import AddMeal from '../components/meal/AddMeal.jsx'
+import DailyGoals from '../components/createUpdate/DailyGoals.jsx'
+import TodaysMeals from '../components/meal/TodaysMeals.jsx'
 import WeeklyGoals from '../components/WeeklyGoals.jsx'
-import Nutrition from '../components/Nutrition.jsx'
+import Nutrition from '../components/nutrition/Nutrition.jsx'
 
 class DashboardContainer extends Component {
 
